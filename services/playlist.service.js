@@ -1,0 +1,65 @@
+const Playlist = require('../models/playlist.model')
+const mongoose = require('mongoose');
+
+const PlaylistService = {}
+
+
+async function updatePlaylist(playlist, songs) {
+    try {
+        playlist.songs.push(songs.toString())
+        await playlist.save();
+        return playlist;
+    } catch (e) {
+        throw new Error('Error Update playlist')
+    }
+}
+
+PlaylistService.createPlaylist = async function ({ idUser, name, songs }) {
+    try {
+        const playlist = new Playlist({ idUser, name, songs });
+        const newPlaylist = await playlist.save();
+        return newPlaylist;
+    } catch (e) {
+        throw new Error('Error while save Playlist');
+    }
+}
+
+
+PlaylistService.getPlaylists = async function () {
+    try {
+        const playlists = await Playlist.find({});
+        return playlists;
+    } catch (e) {
+        throw new Error('Errror');
+    }
+}
+
+PlaylistService.getPlaylist = async function ({ id }) {
+    try {
+        const playlist = await Playlist.findById(id)
+        return playlist;
+    } catch (error) {
+        throw new Error('Error while getting User')
+    }
+};
+
+PlaylistService.upsertPlaylist = async function ({ id, songs }) {
+    const playlist = await Playlist.findById(id)
+    try {
+        return await updatePlaylist(playlist, songs);
+    }
+    catch (e) {
+        throw new Error('Error while playlist')
+    }
+}
+
+PlaylistService.delatePlaylist = async function ({ id }) {
+    try {
+        const user = await Playlist.findByIdAndRemove(id);
+        return user
+    } catch (e) {
+        throw new Error('Error while delete Playlist');
+    }
+};
+
+module.exports = PlaylistService;
