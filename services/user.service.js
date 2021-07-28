@@ -8,7 +8,8 @@ userService.createUser = async function ({ name, email, password }) {
         const newUser = await user.save();
         return newUser
     } catch (e) {
-        throw new Errror('Error while save user');
+        console.log(e.message);
+        throw new Errror('Error while save user'); 
     }
 }
 
@@ -17,6 +18,7 @@ userService.getUsers = async function () {
         const users = await User.find({})
         return users;
     } catch (e) {
+        console.log(e.message);
         throw new Error('Errror');
     }
 }
@@ -26,6 +28,7 @@ userService.getUser = async function ({ id }) {
         const logedUser = await User.findById(id)
         return logedUser;
     } catch (error) {
+        console.log(e.message);
         throw new Error('Error while getting User')
     }
 }
@@ -37,6 +40,7 @@ userService.updateUser = async function ({ id }, { name }) {
         await updateUser.save();
         return updateUser;
     } catch (e) {
+        console.log(e.message);
         throw new Error('Errror while update user');
     }
 }
