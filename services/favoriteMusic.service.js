@@ -3,6 +3,16 @@ const mongoose = require('mongoose')
 
 const favoriteMusicService = {}
 
+
+favoriteMusicService.getFavoriteMusicbyUser = async function ({idUser}) {
+    try {
+        const favoriteMusic = await FavoriteMusic.find({idUser: mongoose.Types.ObjectId(idUser)})
+        return favoriteMusic;
+    } catch (e) {
+        throw Error('Error while Paginating Favorite Music')
+    }
+}
+
 async function findUser(idUser) {
     try {
         const user = FavoriteMusic.findOne({ idUser: mongoose.Types.ObjectId(idUser) })
@@ -32,6 +42,16 @@ async function updateFavoriteMusic(user, songs) {
     }
 }
 
+async function deleteFavoriteMusic (user, song) {
+    try {
+        user.songs.pull(song);
+        user.save()
+        return user;
+    } catch (e) {
+        throw Error('Error while delete Favorite Music')
+    }
+}
+
 favoriteMusicService.upsertFavoriteMusic = async function ({ idUser, songs }) {
     try {
         const user = await findUser(idUser);
@@ -43,5 +63,18 @@ favoriteMusicService.upsertFavoriteMusic = async function ({ idUser, songs }) {
         throw new Error('Error while save favorite Music')
     }
 }
+
+
+favoriteMusicService.deleteFavoriteMusicByUserAndSong  = async function ({idUser, song}) {
+    try {
+        const user = await findUser (idUser) 
+        if (user){
+            return deleteFavoriteMusic(user, song)
+        }
+    } catch (e) {
+
+        throw Error('Error while save Favorite Music')
+    }
+} 
 
 module.exports = favoriteMusicService;

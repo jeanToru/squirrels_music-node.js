@@ -2,14 +2,14 @@ const User = require('../models/user.model')
 
 const userService = {}
 
-userService.createUser = async function ({ name, email, password }) {
+userService.createUser = async function ({name, email, password}) {
     try {
-        const user = new User({ name, email, password });
+        const user = new User({ name, email,password: md5(password) });
         const newUser = await user.save();
-        return newUser
+        return newUser;
     } catch (e) {
         console.log(e.message);
-        throw new Errror('Error while save user'); 
+        throw Error('Error while save user')
     }
 }
 
@@ -25,11 +25,13 @@ userService.getUsers = async function () {
 
 userService.getUser = async function ({ id }) {
     try {
-        const logedUser = await User.findById(id)
-        return logedUser;
-    } catch (error) {
+        const user = await User.findById(id);
+        let savableUser = JSON.parse(JSON.stringify(user));
+        delete savableUser.password;
+        return savableUser;
+    } catch (e) {
         console.log(e.message);
-        throw new Error('Error while getting User')
+        throw Error('Error while returning User')
     }
 }
 
