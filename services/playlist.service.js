@@ -6,7 +6,7 @@ const PlaylistService = {}
 
 async function findUser(idUser) {
     try {
-        const user = FavoriteMusic.findOne({ idUser: mongoose.Types.ObjectId(idUser) })
+        const user = Playlist.findOne({ idUser: mongoose.Types.ObjectId(idUser) })
         return user ? user : null
     } catch (e) {
         throw new Error('Error while getting user')
