@@ -44,14 +44,15 @@ PlaylistService.createPlaylist = async function ({ idUser, name, songs }) {
 }
 
 
-PlaylistService.getPlaylists = async function () {
+playlistService.getPlaylistUser = async function ({ userId }) {
     try {
-        const playlists = await Playlist.find({});
-        return playlists;
+      const playlist = await Playlist.find({ userId: mongoose.Types.ObjectId(userId) });
+      return playlist;
     } catch (e) {
-        throw new Error('Errror');
+      console.log('Error Message', e.message);
+      throw Error('Error while Paginating playlist');
     }
-}
+  };
 
 PlaylistService.getPlaylist = async function ({ id }) {
     try {

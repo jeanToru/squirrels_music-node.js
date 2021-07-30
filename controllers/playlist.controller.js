@@ -12,14 +12,14 @@ playlistController.create = async function (req, res, next) {
 }
 
 
-playlistController.getPlaylists = async function (req, res, next) {
+playlistController.getPlaylistUser = async function (req, res, next) {
     try {
-        const playlists = await playlistService.getPlaylists();
-        return res.status(201).json({ status: 200, data: playlists, message: 'Successfully playlists restrived'})
-    }catch(error){
-        return res.status(400).json({status: 400, message: error.message})
-    }  
-}
+      const playlist = await playlistService.getPlaylistUser(req.params);
+      return res.status(200).json({ status: 200, data: playlist, message: 'Successfully playlist retrieved' });
+    } catch (error) {
+      return res.status(400).json({ status: 400, message: error.message });
+    }
+  };
 
 playlistController.getPlaylist = async function(req,res,next){
     try{
@@ -54,7 +54,7 @@ playlistController.deleteSong= async function (req, res, next) {
 playlistController.deletePlaylist = async function (req, res, next){ 
     try{
         const  playlist = await  playlistService.delatePlaylist(req.params)
-        return res.status(200).json({status: 200, data:  playlist, message: "Successfully deleted playlist"})
+        return res.status(202).json({status: 202, message: "Successfully deleted playlist"})
   
     }   catch(error){
         return res.status(400).json({status:400, message: error.message})
