@@ -13,13 +13,18 @@ userService.createUser = async function ({ name, email, password }) {
     }
 }
 
-userService.getUsers = async function () {
+userService.getUsers = async function (query) {
     try {
-        const users = await User.find({})
-        return users;
+        const users = await User.find(query)
+        console.log('users', users)
+        return users.map(user => {
+            let getUser = JSON.parse(JSON.stringify(user));
+            delete getUser.password;
+            return getUser;
+        });
     } catch (e) {
         console.log(e.message);
-        throw new Error('Errror');
+        throw Error('Error while Paginating Users')
     }
 }
 
