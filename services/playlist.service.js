@@ -73,8 +73,8 @@ PlaylistService.upsertPlaylist = async function ({ id, songs }) {
 }
 
 PlaylistService.deletePlaylistSong = async function ({ idUser, song }) {
+    const user = await findUser(idUser)
     try {
-        const user = await findUser(idUser)
         return await deleteSongdelatePlaylist(user, song);
     }
     catch (e) {
