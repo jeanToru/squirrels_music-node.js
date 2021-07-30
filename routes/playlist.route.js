@@ -7,6 +7,6 @@ router.get('/playlist/:userId', playlistController.getPlaylistUser)
 router.get('/playlist/:id', playlistController.getPlaylist)
 router.put('/playlist', playlistController.upser)
 router.delete('/playlist/:id', playlistController.deletePlaylist);
-router.delete('/playlist/:idUser/song/:song', playlistController.deleteSong)
+router.delete('/playlist/:id/song/:song', playlistController.deleteSong)
 
 module.exports = router;
