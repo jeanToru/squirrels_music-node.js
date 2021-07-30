@@ -46,7 +46,7 @@ PlaylistService.createPlaylist = async function ({ idUser, name, songs }) {
 
 PlaylistService.getPlaylistUser = async function ({ idUser }) {
     try {
-      const playlist = await Playlist.find({ idUser: mongoose.Types.ObjectId(idUser) });
+      const playlist = await Playlist.findUser(idUser);
       return playlist;
     } catch (e) {
       console.log('Error Message', e.message);
