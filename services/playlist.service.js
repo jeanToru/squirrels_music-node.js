@@ -75,10 +75,10 @@ PlaylistService.upsertPlaylist = async function ({ id, songs }) {
     }
 }
 
-PlaylistService.deletePlaylistSong = async function ({ idUser, song }) {
-    const user = await findUser(idUser)
+PlaylistService.deletePlaylistSong = async function ({ id, song }) {
+    const playlist = await Playlist.findById(id)
     try {
-        return await deleteSongdelatePlaylist(user, song);
+        return await deleteSongdelatePlaylist(playlist, song);
     }
     catch (e) {
         throw new Error('Error while playlist')
