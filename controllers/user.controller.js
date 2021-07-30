@@ -2,7 +2,7 @@ const userService = require('../services/user.service')
 
 const userController = {};
 
-userControllers.create = async function (req, res, next) {
+userController.create = async function (req, res, next) {
     try {
         const newUser = await userService.createUser(req.body)
         return res.status(201).json({ newUser });
@@ -11,7 +11,7 @@ userControllers.create = async function (req, res, next) {
     }
 }
 
-userControllers.getUsers = async function (req, res, next) {
+userController.getUsers = async function (req, res, next) {
     try {
         const users = await userService.getUsers({})
         return res.status(200).json({ status: 200, data: users, message: "Succesfully Users Retrieved" });
