@@ -42,6 +42,15 @@ playlistController.upser = async function (req, res, next) {
     }
 }
 
+playlistController.deleteSong= async function (req, res, next) {
+    try {
+        const favoriteMusic = await playlistService.deletePlaylistSong(req.params)
+        return res.status(202).json({ status: 202, data: favoriteMusic, message: "Item removed successfully" });
+    } catch (e) {
+        return res.status(400).json({ status: 400, message: e.message });
+    }
+}
+
 playlistController.deletePlaylist = async function (req, res, next){ 
     try{
         const  playlist = await  playlistService.delatePlaylist(req.params)

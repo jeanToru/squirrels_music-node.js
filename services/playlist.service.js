@@ -14,6 +14,16 @@ async function updatePlaylist(playlist, songs) {
     }
 }
 
+async function deleteSongdelatePlaylist (playlist, song) {
+    try {
+        playlist.songs.pull(song);
+        playlist.save()
+        return playlist;
+    } catch (e) {
+        throw Error('Error while delete Favorite Music')
+    }
+}
+
 PlaylistService.createPlaylist = async function ({ idUser, name, songs }) {
     try {
         const playlist = new Playlist({ idUser, name, songs });
@@ -47,6 +57,16 @@ PlaylistService.upsertPlaylist = async function ({ id, songs }) {
     const playlist = await Playlist.findById(id)
     try {
         return await updatePlaylist(playlist, songs);
+    }
+    catch (e) {
+        throw new Error('Error while playlist')
+    }
+}
+
+PlaylistService.deletePlaylistSong = async function ({ id, songs }) {
+    const playlist = await Playlist.findById(id)
+    try {
+        return await deleteSongdelatePlaylist(playlist, songs);
     }
     catch (e) {
         throw new Error('Error while playlist')
