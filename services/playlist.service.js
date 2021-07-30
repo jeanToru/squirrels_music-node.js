@@ -76,7 +76,7 @@ PlaylistService.deletePlaylistSong = async function ({ idUser, song }) {
     try {
         const user = await findUser(idUser)
         if (user) {
-            return await deleteSongdelatePlaylist(user, songs);
+            return await deleteSongdelatePlaylist(user, song);
         }
     }
     catch (e) {
