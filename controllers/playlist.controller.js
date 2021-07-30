@@ -21,15 +21,17 @@ playlistController.getPlaylists = async function (req, res, next) {
     }  
 }
 
-playlistController.getPlaylist = async function (req, res, next) {
-    try {
-        const userId = req.query.userId;
-        const playlists = await playlistService.getPlaylist({ userId });
-        return res.status(200).json({ data: playlists, message: 'Successfully playlist retrieved' });
-    } catch (error) {
-        return res.status(400).json({ message: error.message });
+playlistController.getPlaylist = async function(req,res,next){
+    try{
+        const playlist = await playlistService.getPlaylist(req.params);
+        if(playlist == null){
+            return res.status(400).json({ message: 'Cannot find playlists'})
+        }
+        return res.status(200).json({ status: 200, data: playlist, message: 'Successfully playlists restrived' });
+    }catch(e){
+        return res.status(400).json({status:400, message: e.message})
     }
-};
+}
 
 playlistController.upser = async function (req, res, next) {
     try {
