@@ -4,6 +4,15 @@ const mongoose = require('mongoose');
 const PlaylistService = {}
 
 
+async function findUser(idUser) {
+    try {
+        const user = FavoriteMusic.findOne({ idUser: mongoose.Types.ObjectId(idUser) })
+        return user ? user : null
+    } catch (e) {
+        throw new Error('Error while getting user')
+    }
+}
+
 async function updatePlaylist(playlist, songs) {
     try {
         playlist.songs.push(songs.toString())
@@ -14,7 +23,7 @@ async function updatePlaylist(playlist, songs) {
     }
 }
 
-async function deleteSongdelatePlaylist (playlist, song) {
+async function deleteSongdelatePlaylist(playlist, song) {
     try {
         playlist.songs.pull(song);
         playlist.save()
@@ -63,10 +72,12 @@ PlaylistService.upsertPlaylist = async function ({ id, songs }) {
     }
 }
 
-PlaylistService.deletePlaylistSong = async function ({ id, songs }) {
-    const playlist = await Playlist.findById(id)
+PlaylistService.deletePlaylistSong = async function ({ idUser, song }) {
     try {
-        return await deleteSongdelatePlaylist(playlist, songs);
+        const user = await findUser(idUser)
+        if (user) {
+            return await deleteSongdelatePlaylist(user, songs);
+        }
     }
     catch (e) {
         throw new Error('Error while playlist')
