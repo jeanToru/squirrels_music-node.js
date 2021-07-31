@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const userRoute = require('./routes/user.route');
 const favoriteRoute = require('./routes/favoriteMusic.route');
 const playlist = require('./routes/playlist.route');
@@ -16,24 +17,13 @@ db.on('error', error => console.log(error));
 db.once('open', () => console.log('connection to db established'));
 
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({
     type: 'app;ication/x-www-form-urlencoded',
     extended: true
 }))
 
-app.use(
-    cors({
-        origin: (origin, cb) => cb(null, true),
-        credentials: true,
-        preflightContinue: true,
-        exposedHeaders: [
-            'Access-Control-Allow-Headers',
-            'Access-Control-Allow-Origin, Origin, X-Requested-With, Content-Type, Accept',
-            'X-Password-Expired'
-        ],
-        optionsSuccessStatus: 200
-    })
-)
+
 
 app.use('/', userRoute);
 app.use('/', favoriteRoute);
