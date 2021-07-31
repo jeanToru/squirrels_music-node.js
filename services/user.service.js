@@ -52,4 +52,18 @@ userService.updateUser = async function ({ id }, { name }) {
     }
 }
 
+userService.LogUser = async function ({ email, password }) {
+    try {
+        const logedUser = await User.findOne({ email, password: md5(password) })
+        if (logedUser) {
+            return logedUser;
+        } else {
+            return 'User doesnt exist or the password is not the same'
+        }
+    } catch (e) {
+        console.log(e.message)
+        throw new Error('Error while getting User')
+    }
+}
+
 module.exports = userService;
