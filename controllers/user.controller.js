@@ -42,5 +42,14 @@ userController.updateUser = async function (req, res, next) {
     }
 }
 
+userController.login = async function(req,res,next){
+    try{
+        const userLogIn = await userService.LogUser(req.body);
+        return res.status(200).json({ status: 200, data: userLogIn});
+    }catch(error){
+        throw new Error('Error while loging user');
+    }
+}
+
 
 module.exports = userController;
