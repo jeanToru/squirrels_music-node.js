@@ -66,22 +66,12 @@ userService.LogUser = async function ({ email, password }) {
     }
 }
 
-userService.userLogin = async function ({ email }, { password }) {
+userService.userLogin = async function ({ email }, { password, name }) {
     try {
         const logedUser = await User.find({ email: email });
-        if (userInfo[0].password === md5(password)) {
-            return info = {
-                id: userInfo[0].id,
-                name: userInfo[0].name,
-                email: userInfo[0].email,
-                password: userInfo[0].password,
-                existe: true
-            }
-        } else {
-            return info = {
-                existe: false
-            }
-        };
+        if (!logedUser) {
+            createUser(name, email, password)
+        }
     } catch (e) {
         console.log(e.message);
         throw new Error('Error dont exist User');
