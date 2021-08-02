@@ -68,7 +68,7 @@ userService.LogUser = async function ({ email, password }) {
 
 userService.userLogin = async function({email},{password}){
     try{
-        const logedUser = await User.find({email:email});
+        const userInfo = await User.find({email:email});
         if(userInfo[0].password === md5(password)){
             return info = {
                 id:userInfo[0].id,
