@@ -1,5 +1,4 @@
 const userService = require('../services/user.service')
-
 const userController = {};
 
 userController.create = async function (req, res, next) {
@@ -41,7 +40,6 @@ userController.login = async function (req, res, next) {
     }
 }
 
-
 userController.updateUser = async function (req, res, next) {
     try {
         const updateUser = await userService.updateUser(req.params, req.body);
@@ -51,5 +49,13 @@ userController.updateUser = async function (req, res, next) {
     }
 }
 
+userController.userLogin = async function (req, res, next){
+    try{
+        const loginUser = await userService.userLogin(req.params, req.body);
+        return res.status(200).json({loginUser});
+    }catch(error){
+        return res.status(400).json({status: 400, message: error.message})
+    }
+}
 
 module.exports = userController;
