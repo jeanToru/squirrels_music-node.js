@@ -66,16 +66,4 @@ userService.LogUser = async function ({ email, password }) {
     }
 }
 
-userService.userLogin = async function ({ email }, { password, name }) {
-    try {
-        const logedUser = await User.find({ email: email });
-        if (!logedUser) {
-            createUser(name, email, password)
-        }
-    } catch (e) {
-        console.log(e.message);
-        throw new Error('Error dont exist User');
-    }
-}
-
 module.exports = userService;
