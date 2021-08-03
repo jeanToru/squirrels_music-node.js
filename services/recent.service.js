@@ -44,4 +44,13 @@ RecentService.upsertRecent = async function ({ idUser, songs }) {
     }
 }
 
+RecentService.getRecent = async function ({ id }) {
+    try {
+        const recent = await RecentMusic.findById(id);
+        return recent;
+    } catch (e) {
+        throw new Error('Error while returning recent songs');
+    }
+};
+
 module.exports = RecentService;
