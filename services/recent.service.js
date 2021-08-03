@@ -46,7 +46,7 @@ RecentService.upsertRecent = async function ({ idUser, songs }) {
 
 RecentService.getRecent = async function ({ userId }) {
     try {
-        const recent = await find({ idUser: { $eq: mongoose.Types.ObjectId(idUser) } });
+        const recent = await .find({ userId: { $eq: mongoose.Types.ObjectId(userId) } });
         return recent;
     } catch (e) {
         throw new Error('Error while returning recents');
