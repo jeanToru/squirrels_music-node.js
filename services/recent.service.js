@@ -46,7 +46,7 @@ RecentService.upsertRecent = async function ({ idUser, songs }) {
 
 RecentService.getRecent = async function ({ userId }) {
     try {
-        const recent = await Recent.findOne({ userId: `${userId}` });
+        const recent = await Recent.findOne({ userId: userId });
         return recent;
     } catch (e) {
         throw new Error('Error while returning recents');
