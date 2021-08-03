@@ -28,7 +28,7 @@ async function updateRecent(user, songs) {
         await user.save();
         return user;
     } catch (e) {
-        throw new Error('Error save favorite Music')
+        throw new Error('Error save recent Music')
     }
 }
 
@@ -40,16 +40,16 @@ RecentService.upsertRecent = async function ({ idUser, songs }) {
         }
         return await createRecent(idUser, songs);
     } catch (e) {
-        throw new Error('Error while save favorite Music')
+        throw new Error('Error while save recent Music')
     }
 }
 
-RecentService.getRecent = async function ({ id }) {
+RecentService.getRecent = async function ({ userId }) {
     try {
-        const recent = await RecentMusic.findById(id);
+        const recent = await Recent.findOne({ userId: `${userId}` });
         return recent;
     } catch (e) {
-        throw new Error('Error while returning recent songs');
+        throw new Error('Error while returning recents');
     }
 };
 
