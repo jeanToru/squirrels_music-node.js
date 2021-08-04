@@ -19,7 +19,7 @@ db.once('open', () => console.log('connection to db established'));
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({
-    type: 'app;ication/x-www-form-urlencoded',
+    type: 'application/x-www-form-urlencoded',
     extended: true
 }))
 
